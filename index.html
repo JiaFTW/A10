@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<head>
+    
+    <title>Cookie Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .cookie-message {
+            background-color: #ffeb3b;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cookies Page</h1>
+    <p id="cookie-status">Get your cookies here!</p>
+
+    <div class="cookie-message" id="cookie-message">
+        <p>Cookie has been set! Your username is: <span id="cookie-value"></span></p>
+    </div>
+
+    <button onclick="setCookie()">Set Cookie</button>
+
+    <script>
+        
+        function setCookie() {
+            let username = "JohnDoe"; 
+            let expirationDays = 7;
+            let date = new Date();
+            date.setTime(date.getTime() + (expirationDays * 24 * 60 * 60 * 1000)); 
+            let expires = "expires=" + date.toUTCString();
+            document.cookie = "username=" + username + ";" + expires + ";path=/"; 
+            alert("Cookie has been set!");
+        }
+
+       
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i].trim();
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+       
+        function checkCookie() {
+            let username = getCookie("username");
+            if (username) {
+                document.getElementById("cookie-status").innerText = "Hello, " + username + "!";
+                document.getElementById("cookie-message").style.display = "block";
+                document.getElementById("cookie-value").innerText = username;
+            } else {
+                document.getElementById("cookie-status").innerText = "No cookie found.";
+            }
+        }
+
+        window.onload = function() {
+            checkCookie();
+        };
+    </script>
+
+</body>
+</html>
